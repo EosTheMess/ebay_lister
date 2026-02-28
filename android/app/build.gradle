@@ -4,11 +4,9 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
-
 android {
     namespace "com.example.ebay_lister"
     compileSdk 34
-
     defaultConfig {
         applicationId "com.example.ebay_lister"
         minSdk 21
@@ -16,7 +14,6 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
     buildTypes {
         release {
             signingConfig signingConfigs.debug
