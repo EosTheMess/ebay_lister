@@ -1,4 +1,7 @@
+import os
 
+# 1. Define the updated, comprehensive Flutter code
+flutter_code = '''
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -79,7 +82,7 @@ class _EBayListerHomeState extends State<EBayListerHome> {
     if (!await csvFile.exists()) {
       await csvFile.writeAsString(
         "Action,Category,Title,Description,ConditionID,Format,Duration,StartPrice,Quantity,Location,"
-        "ShippingService-1:Option,ShippingService-1:Cost,DispatchTimeMax,CustomLabel\n"
+        "ShippingService-1:Option,ShippingService-1:Cost,DispatchTimeMax,CustomLabel\\n"
       );
     }
 
@@ -88,8 +91,8 @@ class _EBayListerHomeState extends State<EBayListerHome> {
         : _titleController.text;
     
     // Formatting the row for CSV (wrapping text in quotes)
-    String row = "Add,11483,\"$finalTitle\",\"${_descController.text}\",$_condition,FixedPrice,GTC,"
-        "${_priceController.text},1,\"Chicago, IL\",USPSFirstClass,${_shipController.text},3,INV-$_counter\n";
+    String row = "Add,11483,\\"$finalTitle\\",\\"${_descController.text}\\",$_condition,FixedPrice,GTC,"
+        "${_priceController.text},1,\\"Chicago, IL\\",USPSFirstClass,${_shipController.text},3,INV-$_counter\\n";
 
     await csvFile.writeAsString(row, mode: FileMode.append);
 
@@ -148,3 +151,10 @@ class _EBayListerHomeState extends State<EBayListerHome> {
     );
   }
 }
+'''
+
+# 2. Write the file
+with open('lib/main.dart', 'w') as f:
+    f.write(flutter_code)
+
+print("lib/main.dart updated with full eBay File Exchange fields.")
