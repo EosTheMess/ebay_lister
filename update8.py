@@ -1,4 +1,7 @@
+import os
 
+# Define the corrected Flutter code
+fixed_code = '''
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -80,7 +83,7 @@ class _EBayListerHomeState extends State<EBayListerHome> {
     if (!await csvFile.exists()) {
       await csvFile.writeAsString(
         "Action,Category,Title,Description,ConditionID,Format,Duration,StartPrice,Quantity,Location,"
-        "ShippingService-1:Option,ShippingService-1:Cost,DispatchTimeMax,CustomLabel\n"
+        "ShippingService-1:Option,ShippingService-1:Cost,DispatchTimeMax,CustomLabel\\n"
       );
     }
 
@@ -89,8 +92,8 @@ class _EBayListerHomeState extends State<EBayListerHome> {
         ? "${_brandController.text} $_category ${_sizeController.text} ${_descController.text}".trim() 
         : _titleController.text;
     
-    String row = "Add,11483,\"$finalTitle\",\"${_descController.text}\",$_condition,FixedPrice,GTC,"
-        "${_priceController.text},1,\"Chicago, IL\",USPSFirstClass,${_shipController.text},3,INV-$_counter\n";
+    String row = "Add,11483,\\"$finalTitle\\",\\"${_descController.text}\\",$_condition,FixedPrice,GTC,"
+        "${_priceController.text},1,\\"Chicago, IL\\",USPSFirstClass,${_shipController.text},3,INV-$_counter\\n";
 
     await csvFile.writeAsString(row, mode: FileMode.append);
 
@@ -160,3 +163,9 @@ class _EBayListerHomeState extends State<EBayListerHome> {
     );
   }
 }
+'''
+
+with open('lib/main.dart', 'w') as f:
+    f.write(fixed_code)
+
+print("✅ lib/main.dart fixed! _notesController error resolved.")
