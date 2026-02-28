@@ -1,1 +1,6 @@
-android { defaultConfig { minSdkVersion 21 } }
+plugins { id "com.android.application" }
+android {
+    namespace "com.example.ebay_lister"
+    compileSdk 34
+    defaultConfig { applicationId "com.example.ebay_lister"; minSdk 21; targetSdk 34; versionCode 1; versionName "1.0" }
+}
