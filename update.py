@@ -1,46 +1,43 @@
 import os
 import shutil
 
-# 1. Clean up the old structure
+# 1. Wipe the old, conflicting Android folder
 if os.path.exists("android"):
     shutil.rmtree("android")
 
-# 2. Define the exact modern structure
-folders = [
-    "android/app/src/main/kotlin/com/example/ebay_lister",
-    "android/app/src/main/res/drawable",
-    "android/app/src/main/res/values",
-    "android/gradle/wrapper"
-]
+# 2. Recreate the structure
+os.makedirs("android/app/src/main/kotlin/com/example/ebay_lister", exist_ok=True)
+os.makedirs("android/gradle/wrapper", exist_ok=True)
 
-for folder in folders:
-    os.makedirs(folder, exist_ok=True)
+# 3. settings.gradle (The main fix for the 'declarative' error)
+with open("android/settings.gradle", "w") as f:
+    f.write('''
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
 
-# 3. Create MainActivity.kt
-with open("android/app/src/main/kotlin/com/example/ebay_lister/MainActivity.kt", "w") as f:
-    f.write('package com.example.ebay_lister\nimport io.flutter.embedding.android.FlutterActivity\nclass MainActivity: FlutterActivity() {}')
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
-# 4. Create a robust AndroidManifest.xml
-with open("android/app/src/main/AndroidManifest.xml", "w") as f:
-    f.write('''<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.CAMERA" />
-    <application android:label="ebay_lister" android:icon="@mipmap/ic_launcher">
-        <activity android:name="com.example.ebay_lister.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <meta-data android:name="flutterEmbedding" android:value="2" />
-    </application>
-</manifest>''')
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-# 5. Create the App-level build.gradle
+plugins {
+    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+}
+
+include ":app"
+''')
+
+# 4. App-level build.gradle (Updated for modern Flutter)
 with open("android/app/build.gradle", "w") as f:
     f.write('''
 plugins {
@@ -48,9 +45,11 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
+
 android {
     namespace "com.example.ebay_lister"
     compileSdk 34
+
     defaultConfig {
         applicationId "com.example.ebay_lister"
         minSdk 21
@@ -58,36 +57,43 @@ android {
         versionCode 1
         versionName "1.0"
     }
-}''')
 
-# 6. Create the Project-level build.gradle
-with open("android/build.gradle", "w") as f:
-    f.write('''
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
     }
 }
-rootProject.buildDir = '../build'
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(':app')
-}''')
-
-# 7. Create settings.gradle
-with open("android/settings.gradle", "w") as f:
-    f.write('''
-include ":app"
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
-assert localPropertiesFile.exists()
-localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
 ''')
 
-print("Structure rebuilt. Ready to push.")
+# 5. MainActivity.kt
+with open("android/app/src/main/kotlin/com/example/ebay_lister/MainActivity.kt", "w") as f:
+    f.write('''package com.example.ebay_lister
+import io.flutter.embedding.android.FlutterActivity
+class MainActivity: FlutterActivity() {}
+''')
+
+# 6. AndroidManifest.xml (Ensuring permissions are right)
+with open("android/app/src/main/AndroidManifest.xml", "w") as f:
+    f.write('''<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.CAMERA" />
+    <application android:label="eBay Lister" android:icon="@mipmap/ic_launcher">
+        <activity android:name="com.example.ebay_lister.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>''')
+
+# 7. Dummy local.properties (GitHub Actions will overwrite this, but the script needs it locally)
+with open("android/local.properties", "w") as f:
+    f.write('flutter.sdk=/tmp/flutter')
+
+print("Android files updated to modern declarative style. Pushing to GitHub...")
