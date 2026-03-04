@@ -10,7 +10,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          architecture: ARM64
 
       # This is the "Magic Fix" - it recreates the iOS folder on a real Mac
       - name: Regenerate iOS Folder
