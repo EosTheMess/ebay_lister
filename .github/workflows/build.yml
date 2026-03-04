@@ -5,7 +5,19 @@ jobs:
   build_android:
     runs-on: ubuntu-latest
     steps:
+      
       - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: ARM64
+
+      # This is the "Magic Fix" - it recreates the iOS folder on a real Mac
+      - name: Regenerate iOS Folder
+        run: |
+          rm -rf ios
+          flutter create --platforms ios .
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
