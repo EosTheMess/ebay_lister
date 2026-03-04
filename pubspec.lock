@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
+  boolean_selector:
+    dependency: transitive
+    description:
+      name: boolean_selector
+      sha256: "8aab1771e1243a5063b8b0ff68042d67334e3feab9e95b9490f9a6ebf73b42ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   camera:
     dependency: "direct main"
     description:
@@ -21,18 +29,18 @@ packages:
     dependency: transitive
     description:
       name: camera_android_camerax
-      sha256: "9dfea17fc12766721bf3d98579d6dab76f339522926e8e8ce1988248fd91e0a9"
+      sha256: c0be4298e3888ba6cf5c1fb1ae1203f08dcbb14d4f545ce5262f473cf8c33e28
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0+1"
+    version: "0.7.1"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: "16f0d44dfc8ed57abfbbf7dd629a3fae1fab9a60baac2cb4e59ffac372251b96"
+      sha256: "90e4cc3fde331581a3b2d35d83be41dbb7393af0ab857eb27b732174289cb96d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.0+3"
+    version: "0.10.1"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -97,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  ffi_leak_tracker:
+    dependency: transitive
+    description:
+      name: ffi_leak_tracker
+      sha256: "076941187786423291bacbbf19017e3e473cf01c9d96fccc869979494f2156cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   file:
     dependency: transitive
     description:
@@ -147,6 +163,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  matcher:
+    dependency: "direct overridden"
+    description:
+      name: matcher
+      sha256: dc0b7dc7651697ea4ff3e69ef44b0407ea32c487a39fff6a4004fa585e901861
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.19"
   material_color_utilities:
     dependency: transitive
     description:
@@ -156,13 +180,13 @@ packages:
     source: hosted
     version: "0.13.0"
   meta:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: meta
-      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
+      sha256: "9f29b9bcc8ee287b1a31e0d01be0eae99a930dbffdaecf04b3f3d82a969f296f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
+    version: "1.18.1"
   native_toolchain_c:
     dependency: transitive
     description:
@@ -328,6 +352,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.2"
+  stack_trace:
+    dependency: transitive
+    description:
+      name: stack_trace
+      sha256: "8b27215b45d22309b5cddda1aa2b19bdfec9df0e765f2de506401c071d38d1b1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.1"
+  stream_channel:
+    dependency: transitive
+    description:
+      name: stream_channel
+      sha256: "969e04c80b8bcdf826f8f16579c7b14d780458bd97f56d107d3950fdbeef059d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   stream_transform:
     dependency: transitive
     description:
@@ -352,6 +392,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.2"
+  test_api:
+    dependency: "direct overridden"
+    description:
+      name: test_api
+      sha256: "8161c84903fd860b26bfdefb7963b3f0b68fee7adea0f59ef805ecca346f0c7a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.10"
   typed_data:
     dependency: transitive
     description:
@@ -376,6 +424,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  win32:
+    dependency: "direct overridden"
+    description:
+      name: win32
+      sha256: e7489db51886360dad710b3bc177108267f0554644dd04102dcb35f23b71c738
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
+  win32_registry:
+    dependency: "direct overridden"
+    description:
+      name: win32_registry
+      sha256: "345b4015cde635051a9fa99295fe25fff4a3c6d6f926e2396547f3ac2d50ef77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   xdg_directories:
     dependency: transitive
     description:
@@ -393,5 +457,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.10.3 <4.0.0"
+  dart: ">=3.11.0 <4.0.0"
   flutter: ">=3.38.4"
