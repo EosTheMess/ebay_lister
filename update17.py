@@ -1,3 +1,9 @@
+import os
+
+workflow_path = '.github/workflows/build.yml'
+os.makedirs(os.path.dirname(workflow_path), exist_ok=True)
+
+workflow_content = r'''
 name: eBay Lister Build
 
 on:
@@ -62,3 +68,9 @@ jobs:
         with:
           name: ios-build
           path: build/ios/iphoneos/*.app
+'''
+
+with open(workflow_path, 'w') as f:
+    f.write(workflow_content.strip())
+
+print("✅ .github/workflows/build.yml rewritten with correct Flutter setup order.")
