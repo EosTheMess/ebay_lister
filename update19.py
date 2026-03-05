@@ -1,3 +1,8 @@
+import os
+
+workflow_path = '.github/workflows/build.yml'
+
+workflow_content = r'''
 name: eBay Lister Production Build
 
 on:
@@ -67,3 +72,9 @@ jobs:
         with:
           name: ebay-lister-ios-v${{ github.run_number }}
           path: "*.ipa"
+'''
+
+with open(workflow_path, 'w') as f:
+    f.write(workflow_content.strip())
+
+print("✅ Production workflow updated. GitHub will now produce full .apk and .ipa files.")
