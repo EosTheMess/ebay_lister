@@ -1,4 +1,9 @@
-plugins {
+import os
+
+file_path = 'android/app/build.gradle'
+
+# The bulletproof 2026 app-level build.gradle
+new_app_gradle = """plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
     // This plugin is the one that fixes the 'io.flutter' unresolved reference
@@ -45,3 +50,11 @@ dependencies {
     // These are standard, the flutter-gradle-plugin handles the rest
     implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.0"
 }
+"""
+
+if os.path.exists(file_path):
+    with open(file_path, 'w') as f:
+        f.write(new_app_gradle)
+    print("✅ Fixed: android/app/build.gradle updated with correct Flutter plugin.")
+else:
+    print("❌ Error: android/app/build.gradle not found.")
